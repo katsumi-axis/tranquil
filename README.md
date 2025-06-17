@@ -74,4 +74,4 @@ See [CLAUDE.md](./CLAUDE.md) for development setup and contribution guidelines.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
