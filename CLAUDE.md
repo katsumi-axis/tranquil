@@ -27,22 +27,25 @@ tranquil/
 
 ```bash
 # 依存関係のインストール
-npm install
+pnpm install
 
 # プロジェクトのビルド
-npm run build
+pnpm run build
 
 # テストの実行
-npm test
+pnpm test
 
 # リンターの実行
-npm run lint
+pnpm run lint
+
+# リンターの実行（自動修正）
+pnpm run lint:fix
 
 # 型チェックの実行
-npm run typecheck
+pnpm run typecheck
 
 # 開発モード（ウォッチモード）
-npm run dev
+pnpm run dev
 ```
 
 ## 主要コンポーネント

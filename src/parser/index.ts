@@ -1,5 +1,5 @@
 import { Parser } from 'node-sql-parser';
-import { SQLDialect } from '../types';
+import type { SQLDialect } from '../types';
 
 const parser = new Parser();
 
@@ -10,6 +10,6 @@ export function parse(sql: string, dialect: SQLDialect = 'postgresql') {
     sqlite: 'SQLite',
     bigquery: 'BigQuery',
   };
-  
+
   return parser.astify(sql, { database: dialectMap[dialect] });
 }

@@ -13,7 +13,7 @@ A TypeScript-based SQL linter and formatter that brings tranquility to your SQL 
 ## Installation
 
 ```bash
-npm install -g tranquil
+pnpm install -g tranquil
 ```
 
 ## Usage

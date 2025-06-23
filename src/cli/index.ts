@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
 import chalk from 'chalk';
-import { glob } from 'glob';
+import { Command } from 'commander';
 import { readFileSync, writeFileSync } from 'fs';
+import { glob } from 'glob';
 import { resolve } from 'path';
-import { lint } from '../core/linter';
-import { format } from '../core/formatter';
 import { loadConfig } from '../config';
+import { format } from '../core/formatter';
+import { lint } from '../core/linter';
+
 const version = '0.1.0'; // TODO: Read from package.json
 
 const program = new Command();
@@ -25,33 +26,35 @@ program
     try {
       const config = await loadConfig(options.config);
       const filePaths = await resolveFiles(files);
-      
+
       let hasErrors = false;
-      
+
       for (const filePath of filePaths) {
         const content = readFileSync(filePath, 'utf-8');
         const result = await lint(content, { ...config, file: filePath });
-        
+
         if (result.errors.length > 0 || result.warnings.length > 0) {
           console.log(chalk.underline(filePath));
-          
+
           result.errors.forEach((error) => {
             console.log(
-              chalk.red(`  ${error.line}:${error.column} error ${error.message} ${error.rule}`)
+              chalk.red(`  ${error.line}:${error.column} error ${error.message} ${error.rule}`),
             );
             hasErrors = true;
           });
-          
+
           result.warnings.forEach((warning) => {
             console.log(
-              chalk.yellow(`  ${warning.line}:${warning.column} warning ${warning.message} ${warning.rule}`)
+              chalk.yellow(
+                `  ${warning.line}:${warning.column} warning ${warning.message} ${warning.rule}`,
+              ),
             );
           });
-          
+
           console.log();
         }
       }
-      
+
       if (hasErrors) {
         process.exit(1);
       }
@@ -70,11 +73,11 @@ program
     try {
       const config = await loadConfig(options.config);
       const filePaths = await resolveFiles(files);
-      
+
       for (const filePath of filePaths) {
         const content = readFileSync(filePath, 'utf-8');
         const formatted = await format(content, config.format);
-        
+
         if (options.write) {
           writeFileSync(filePath, formatted);
           console.log(chalk.green('✓'), filePath);
@@ -96,7 +99,7 @@ program
     try {
       const config = await loadConfig(options.config);
       const filePaths = await resolveFiles(files);
-      
+
       for (const filePath of filePaths) {
         const content = readFileSync(filePath, 'utf-8');
         const formatted = await format(content, config.format);
@@ -111,12 +114,12 @@ program
 
 async function resolveFiles(patterns: string[]): Promise<string[]> {
   const files: string[] = [];
-  
+
   for (const pattern of patterns) {
     const matches = await glob(pattern, { nodir: true });
-    files.push(...matches.map(file => resolve(file)));
+    files.push(...matches.map((file) => resolve(file)));
   }
-  
+
   return [...new Set(files)];
 }
 

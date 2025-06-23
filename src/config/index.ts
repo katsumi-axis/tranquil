@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { TranquilConfig } from '../types';
+import type { TranquilConfig } from '../types';
 
 const defaultConfig: TranquilConfig = {
   dialect: 'postgresql',
@@ -23,7 +23,7 @@ export async function loadConfig(configPath: string): Promise<TranquilConfig> {
     const absolutePath = resolve(process.cwd(), configPath);
     const configContent = readFileSync(absolutePath, 'utf-8');
     const userConfig = JSON.parse(configContent) as Partial<TranquilConfig>;
-    
+
     return {
       ...defaultConfig,
       ...userConfig,
