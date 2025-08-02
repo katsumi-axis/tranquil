@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { TranquilConfig } from '../types';
 
 const defaultConfig: TranquilConfig = {
@@ -36,7 +36,7 @@ export async function loadConfig(configPath: string): Promise<TranquilConfig> {
         ...userConfig.format,
       },
     };
-  } catch (error) {
+  } catch {
     // Return default config if config file not found
     return defaultConfig;
   }

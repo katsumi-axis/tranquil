@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
+import { readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { readFileSync, writeFileSync } from 'fs';
 import { glob } from 'glob';
-import { resolve } from 'path';
 import { loadConfig } from '../config';
 import { format } from '../core/formatter';
 import { lint } from '../core/linter';
